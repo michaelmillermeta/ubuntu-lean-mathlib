@@ -85,6 +85,10 @@ docker run --rm ubuntu-lean-mathlib:test sh -ec '
   test "$(find /workspace/.lake/packages ! -type l ! -perm -0004 | wc -l)" -eq 0
   test "$(find /workspace/.lake/packages ! -uid 0 | wc -l)" -eq 0
   test "$(find /workspace/.lake/packages ! -type l -perm -0002 | wc -l)" -eq 0
+  # Nor may it ever need to write the cache: every .hash is 16 hex digits and
+  # Mathlib is fully built. (Check the hashes first: lake rewrites them.)
+  test "$(find /workspace/.lake/packages -name "*.hash" ! -size 16c | wc -l)" -eq 0
+  lake build --no-build +Mathlib
 '
 ```
 
