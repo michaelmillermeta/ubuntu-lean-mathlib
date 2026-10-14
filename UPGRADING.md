@@ -80,7 +80,7 @@ docker run --rm ubuntu-lean-mathlib:test sh -ec '
   printf "import Mathlib\n#check Nat\n" > /tmp/Smoke.lean
   cd /workspace
   lake env lean /tmp/Smoke.lean
-  python3 -c "import pytest, pytest_json_ctrf"
+  python3 -c "import pytest, ctrf"  # pytest-json-ctrf installs module ctrf
   # The package cache must be readable by, and owned by no, unprivileged user.
   test "$(find /workspace/.lake/packages ! -type l ! -perm -0004 | wc -l)" -eq 0
   test "$(find /workspace/.lake/packages ! -uid 0 | wc -l)" -eq 0
